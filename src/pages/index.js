@@ -5,8 +5,10 @@ import { Link } from "gatsby"
 import Nav from '../components/nav/index';
 import Home from '../components/home';
 import Featured from '../components/featured';
-import Layout from "../components/layout"
-import SEO from "../components/seo"
+import Layout from "../components/layout";
+import Footer from '../components/footer/index';
+import SEO from "../components/seo";
+import './index.css';
 
 const IndexPage = () => (
   <Layout>
@@ -14,6 +16,8 @@ const IndexPage = () => (
     <Nav />
     <Featured />
     <Home />
+    <Link to="/blog" className="viewmore">View More</Link>
+    <Footer />
   </Layout>
 )
 
