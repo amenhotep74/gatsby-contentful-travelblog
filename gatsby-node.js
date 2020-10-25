@@ -21,7 +21,8 @@ exports.createPages = ({ actions, graphql }) => {
         allContentfulBlog (
             sort: { fields: [createdAt], order: DESC }
             filter: {
-                node_locale: {eq: "en-US"}},)
+                node_locale: {eq: "en-US"}
+            },)
             {
                 edges {
                     node {
@@ -80,8 +81,160 @@ exports.createPages = ({ actions, graphql }) => {
         })
     });
 
+    // Create archive page for all blogs, with pagination
+    const getTravel = makeRequest(graphql, `
+        {
+        allContentfulBlog (
+            sort: { fields: [createdAt], order: DESC }
+            filter: {
+                node_locale: {eq: "en-US"}
+                category: {elemMatch: {title: {eq: "Travel"}}}
+            },)
+            {
+                edges {
+                    node {
+                        id
+                        slug
+                    }
+                }
+            }
+        }
+    `).then(result => {
+        const blogs = result.data.allContentfulBlog.edges;
+        const blogsPerPage = 9;
+        const numPages = Math.ceil(blogs.length / blogsPerPage)
+
+        Array.from({ length: numPages }).forEach((_, i) => {
+            createPage({
+                path: i === 0 ? `/category/travel` : `/category/travel/${i + 1}`,
+                component: path.resolve("./src/templates/travel.js"),
+                context: {
+                    limit: blogsPerPage,
+                    skip: i * blogsPerPage,
+                    numPages,
+                    currentPage: i + 1
+                },
+            })
+        })
+    });
+
+    // Create archive page for all blogs, with pagination
+    const getGuide = makeRequest(graphql, `
+        {
+        allContentfulBlog (
+            sort: { fields: [createdAt], order: DESC }
+            filter: {
+                node_locale: {eq: "en-US"}
+                category: {elemMatch: {title: {eq: "Guide"}}}
+            },)
+            {
+                edges {
+                    node {
+                        id
+                        slug
+                    }
+                }
+            }
+        }
+    `).then(result => {
+        const blogs = result.data.allContentfulBlog.edges;
+        const blogsPerPage = 9;
+        const numPages = Math.ceil(blogs.length / blogsPerPage)
+
+        Array.from({ length: numPages }).forEach((_, i) => {
+            createPage({
+                path: i === 0 ? `/category/guide` : `/category/guide/${i + 1}`,
+                component: path.resolve("./src/templates/guide.js"),
+                context: {
+                    limit: blogsPerPage,
+                    skip: i * blogsPerPage,
+                    numPages,
+                    currentPage: i + 1
+                },
+            })
+        })
+    });
+
+    // Create archive page for all blogs, with pagination
+    const getOpinion = makeRequest(graphql, `
+        {
+        allContentfulBlog (
+            sort: { fields: [createdAt], order: DESC }
+            filter: {
+                node_locale: {eq: "en-US"}
+                category: {elemMatch: {title: {eq: "Guide"}}}
+            },)
+            {
+                edges {
+                    node {
+                        id
+                        slug
+                    }
+                }
+            }
+        }
+    `).then(result => {
+        const blogs = result.data.allContentfulBlog.edges;
+        const blogsPerPage = 9;
+        const numPages = Math.ceil(blogs.length / blogsPerPage)
+
+        Array.from({ length: numPages }).forEach((_, i) => {
+            createPage({
+                path: i === 0 ? `/category/opinion` : `/category/opinion/${i + 1}`,
+                component: path.resolve("./src/templates/opinion.js"),
+                context: {
+                    limit: blogsPerPage,
+                    skip: i * blogsPerPage,
+                    numPages,
+                    currentPage: i + 1
+                },
+            })
+        })
+    });
+
+    // Create archive page for all blogs, with pagination
+    const getTech = makeRequest(graphql, `
+        {
+        allContentfulBlog (
+            sort: { fields: [createdAt], order: DESC }
+            filter: {
+                node_locale: {eq: "en-US"}
+                category: {elemMatch: {title: {eq: "Guide"}}}
+            },)
+            {
+                edges {
+                    node {
+                        id
+                        slug
+                    }
+                }
+            }
+        }
+    `).then(result => {
+        const blogs = result.data.allContentfulBlog.edges;
+        const blogsPerPage = 9;
+        const numPages = Math.ceil(blogs.length / blogsPerPage)
+
+        Array.from({ length: numPages }).forEach((_, i) => {
+            createPage({
+                path: i === 0 ? `/category/tech` : `/category/tech/${i + 1}`,
+                component: path.resolve("./src/templates/tech.js"),
+                context: {
+                    limit: blogsPerPage,
+                    skip: i * blogsPerPage,
+                    numPages,
+                    currentPage: i + 1
+                },
+            })
+        })
+    });
+
     return Promise.all([
         getBlog,
-        getArchive
+        getArchive,
+        getTravel,
+        getGuide,
+        getOpinion,
+        getTech,
     ])
 };
