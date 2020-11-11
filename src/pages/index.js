@@ -1,7 +1,6 @@
 import React from "react"
 import { Link } from "gatsby"
 
-
 import Nav from '../components/nav/index';
 import Home from '../components/home';
 import Featured from '../components/featured';

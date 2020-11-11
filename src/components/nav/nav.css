@@ -3,6 +3,16 @@ nav {
   margin-top: -80px;
 }
 
+.inside-links-left {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.navlogo {
+  color: white;
+  font-family: Mulish, sans-serif;
+}
 .nav__items {
   background-color: transparent;
   border: none;
@@ -19,6 +29,7 @@ nav {
 
 .nav__item--logo {
   height: 40px;
+  margin-right: 10px;
 }
 
 .nav__item--link {
